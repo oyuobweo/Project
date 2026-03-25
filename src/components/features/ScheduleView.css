@@ -1,0 +1,123 @@
+/* ===================================================
+ * ScheduleView.css
+ * 내 일정 / 할 일 리스트 뷰 공통 스타일
+ * =================================================== */
+
+/* 공통 뷰 컨테이너 */
+.feature-view-container {
+  padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  animation: slideUp var(--transition-elastic);
+}
+
+.view-header h2 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+.view-header p {
+  font-size: 1rem;
+  color: var(--text-dim);
+}
+
+/* --- 내 일정 그리드 --- */
+.events-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.event-wide-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-light);
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  gap: 20px;
+  transition: var(--transition-theme);
+  cursor: default;
+}
+
+.event-wide-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: var(--primary);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.event-date-tag {
+  width: 50px;
+  height: 60px;
+  background: rgba(99, 102, 241, 0.1);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.event-date-tag .month { font-size: 0.75rem; text-transform: uppercase; color: var(--primary); font-weight: 700; }
+.event-date-tag .day { font-size: 1.3rem; color: var(--text-main); font-weight: 800; }
+
+.event-info h4 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text-main);
+}
+
+.event-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.event-meta span { display: flex; align-items: center; gap: 4px; }
+
+/* --- 할 일 리스트 그리드 --- */
+.todo-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.todo-item-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-light);
+  border-radius: 18px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  transition: var(--transition-theme);
+}
+
+.todo-check { cursor: pointer; transition: transform 0.2s, background-color var(--transition-theme), border-color var(--transition-theme); }
+.todo-check:hover { transform: scale(1.2); }
+
+.todo-content { flex: 1; }
+.todo-text { font-size: 1rem; color: var(--text-main); font-weight: 600; margin-bottom: 4px; }
+.todo-date-tag { font-size: 0.75rem; color: var(--text-dim); }
+
+.todo-item-card.completed {
+  opacity: 0.5;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.todo-item-card.completed .todo-text { text-decoration: line-through; }
+
+/* 빈 상태 플레이스홀더 */
+.empty-placeholder {
+  padding: 60px 0;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 1.1rem;
+  opacity: 0.5;
+  grid-column: 1 / -1;
+}

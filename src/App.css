@@ -1,0 +1,62 @@
+@import './styles/tokens.css';
+@import './components/layout/Layout.css';
+@import './components/features/CalendarView.css';
+@import './components/features/SideBoard.css';
+@import './components/features/EventDetailModal.css';
+@import './components/features/ScheduleView.css';
+
+/* ===================================================
+ * App.css — 공통 전역 유틸리티 & 애니메이션 정의
+ * (컴포넌트별 스타일은 각 .css 파일 참조)
+ * =================================================== */
+
+/* 대시보드 뷰 */
+.dashboard-view-simple h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  letter-spacing: -0.03em;
+  color: var(--text-main);
+}
+
+.banner-area p {
+  font-size: 1.1rem;
+  color: var(--text-dim);
+}
+
+.summary-widgets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.widget-card {
+  padding: 32px;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.orange-accent { border-left: 4px solid #f97316; }
+.green-accent  { border-left: 4px solid #10b981; }
+
+.widget-lbl { font-size: 0.95rem; color: var(--text-dim); font-weight: 500; }
+.widget-val { font-size: 3rem; font-weight: 900; color: var(--text-main); }
+
+/* 공통 애니메이션 키프레임 */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 공통 스크롤바 */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.05); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.1); }

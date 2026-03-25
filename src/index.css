@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
+:root {
+  /* 다크 모드 (기본) - 프리미엄 업무 관리 시스템 전역 색상 */
+  --bg-deep: #05070a;
+  --bg-panel: rgba(13, 17, 23, 0.95);
+  --primary: #6366f1;
+  --primary-glow: rgba(99, 102, 241, 0.3);
+  --secondary: #10b981;
+  --accent: #facc15;
+  --text-main: #f8fafc;
+  --text-dim: #94a3b8;
+  --border-light: rgba(255, 255, 255, 0.15);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  
+  --glass-blur: blur(12px);
+}
+
+/* 라이트 모드 - 안티 그래비티 스타일의 깨끗하고 전문적인 테마 */
+.theme-light {
+  --bg-deep: #f8fafc;
+  --bg-panel: rgba(255, 255, 255, 0.8);
+  --primary: #4f46e5; /* 약간 더 짙은 보라 */
+  --primary-glow: rgba(79, 70, 229, 0.15);
+  --text-main: #0f172a;
+  --text-dim: #475569;
+  --border-light: rgba(0, 0, 0, 0.1);
+  --glass-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.03); /* 훨씬 연하고 좁은 그림자 */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: inherit; /* 모든 요소가 부모의 폰트를 상속받도록 설정 */
+  /* 모든 요소에 기본적인 테마 전환(색상 계열)을 부여 (하위 transition 단축 속성에 의해 덮어써질 수 있음) */
+  transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+  transition-duration: var(--transition-theme);
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  font-family: 'Noto Sans KR', 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  /* 테마 전환 시 부드러운 변화 추가 */
+  transition: background-color var(--transition-theme), color var(--transition-theme);
+}
+
+/* Glassmorphism 메인 유틸리티 */
+.glass-panel {
+  background: var(--bg-panel);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--glass-shadow);
+}
+
+/* 드롭다운 공통 스타일 (사용자 요청 반영: 동일 너비 & 중앙 정렬) */
+.custom-dropdown-btn {
+  width: var(--dropdown-width);
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 항목 가운데 배치 */
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  color: var(--text-main);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.custom-dropdown-btn:hover {
+  background: var(--primary-glow);
+  border-color: var(--primary);
+}
+
+.custom-dropdown-menu {
+  width: var(--dropdown-width); /* 버튼과 동일한 너비 유지 */
+  position: absolute;
+  margin-top: 8px;
+  background: #141821;
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 4px;
+  z-index: 100;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  animation: fadeIn 0.2s ease-out;
+}
+
+.dropdown-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 항목 가운데 배치 */
+  padding: 8px 12px;
+  border-radius: 6px;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  transition: var(--transition-smooth);
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--primary);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 스크롤바 디자인 정돈 */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
