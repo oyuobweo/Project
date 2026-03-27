@@ -55,20 +55,16 @@ function SideBoard({
   onClose 
 }) {
   const [type, setType] = useState('schedule');         // 입력 폼 타입 ('schedule' | 'todo')
-  const [filterType, setFilterType] = useState('all');  // 목록 필터 타입 ('all' | 'schedule' | 'todo')
+  const [filterType, setFilterType] = useState('schedule');  // 목록 필터 타입 ('schedule' | 'todo' | 'all')
   const [inputText, setInputText] = useState('');
   const [description, setDescription] = useState('');
   const [editingId, setEditingId] = useState(null);
 
   // 필터 및 입력 타입 스위칭 핸들러
   const handleTypeSwitch = useCallback((newType) => {
-    if (filterType === newType) {
-      setFilterType('all');
-    } else {
-      setType(newType);
-      setFilterType(newType);
-    }
-  }, [filterType]);
+    setType(newType);
+    setFilterType(newType);
+  }, []);
 
   const handleEditStart = useCallback((ev) => {
     setEditingId(ev.id);
@@ -118,19 +114,18 @@ function SideBoard({
     <div className={`modern-side-board glass-panel ${editingId ? 'is-editing' : ''}`}>
       <header className="sideboard-header">
         <div className="header-left-area">
-          <h2 className="header-date">{format(selectedDate, 'M월 d일 (E)', { locale: ko })}</h2>
+          <div className="header-date">{format(selectedDate, 'M월 d일 (E)', { locale: ko })}</div>
           <div className="inline-switcher">
+            <div className={`switcher-indicator ${filterType}`} />
             <button
-              className={`inline-filter-btn schedule ${filterType === 'schedule' ? 'active' : ''}`}
+              className={`inline-filter-btn ${filterType === 'schedule' ? 'active' : ''}`}
               onClick={() => handleTypeSwitch('schedule')}
-              title={filterType === 'schedule' ? '클릭하면 전체 보기' : '일정만 보기'}
             >
               일정
             </button>
             <button
-              className={`inline-filter-btn todo ${filterType === 'todo' ? 'active' : ''}`}
+              className={`inline-filter-btn ${filterType === 'todo' ? 'active' : ''}`}
               onClick={() => handleTypeSwitch('todo')}
-              title={filterType === 'todo' ? '클릭하면 전체 보기' : '할 일만 보기'}
             >
               할 일
             </button>

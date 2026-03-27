@@ -146,6 +146,35 @@
 
 .detail-textarea-memo:focus { border-color: var(--primary); background: rgba(0, 0, 0, 0.3); }
 
+/* 읽기 전용 모드 스타일 */
+.detail-title-readonly {
+  color: var(--text-main);
+  font-size: 2rem;
+  font-weight: 900;
+  padding: 8px 0;
+  width: 100%;
+  border-bottom: 2px solid transparent;
+}
+
+.detail-memo-readonly {
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
+  padding: 24px;
+  color: var(--text-main);
+  font-size: 1.1rem;
+  line-height: 1.8;
+  min-height: 200px;
+  white-space: pre-wrap; /* 줄바꿈 유지 */
+}
+
+.theme-light .detail-title-readonly { color: #1e293b; }
+.theme-light .detail-memo-readonly {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.05);
+  color: #334155;
+}
+
 .modal-footer-actions {
   display: flex;
   justify-content: space-between;

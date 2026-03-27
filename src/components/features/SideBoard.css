@@ -8,26 +8,30 @@
   to { opacity: 1; transform: translateX(0); }
 }
 
-/* Modern Fluid Glass SideBoard */
+/* Modern Fluid Glass SideBoard (Premium Refined) */
 .modern-side-board {
-  width: 400px;
-  height: 100%;
-  margin: 0 16px 0 0;
+  width: 420px; /* 약간 더 넓게 조정하여 여유 확보 */
+  height: calc(100% - 32px);
+  margin: 16px 16px 16px 0;
   background: var(--bg-panel);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  box-shadow: var(--glass-shadow);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 
+              inset 0 1px 1px rgba(255, 255, 255, 0.1);
   z-index: 100;
-  border: 1px solid var(--border-light);
-  border-radius: 32px;
-  animation: slideInRight 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  transition: background-color var(--transition-theme),
-              border-color var(--transition-theme),
-              box-shadow var(--transition-theme),
-              color var(--transition-theme);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 40px; /* 더 둥글고 부드러운 모서리 */
+  animation: slideInRight 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-light .modern-side-board {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
 }
 
 .sideboard-header {
@@ -45,11 +49,15 @@
 }
 
 .header-date {
-  font-size: 1.5rem;
-  font-weight: 800;
+  font-size: 1.6rem;
+  font-weight: 900;
   color: var(--text-main);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.04em; /* 더 좁게 하여 모던함 강조 */
   white-space: nowrap;
+  background: linear-gradient(135deg, var(--text-main) 0%, var(--text-dim) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .header-right-area {
@@ -66,43 +74,81 @@
   opacity: 0.5;
 }
 
-/* 날짜 옵 인라인 필터 스위처 (2버튼 토글) */
+/* 날짜 옆 인라인 필터 스위처 (캡슐화된 슬라이딩 컨트롤) */
 .inline-switcher {
+  position: relative;
   display: flex;
-  gap: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  min-width: 120px;
+  height: 32px;
+  overflow: hidden;
+}
+
+.theme-light .inline-switcher {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.02);
+}
+
+.switcher-indicator {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  height: calc(100% - 6px);
+  background: var(--primary);
+  border-radius: 11px;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  z-index: 1;
+}
+
+/* 필터 타입에 따른 인디케이터 위치 및 색상 */
+.switcher-indicator.schedule {
+  transform: translateX(0);
+  background: var(--primary);
+}
+
+.switcher-indicator.todo {
+  transform: translateX(100%);
+  background: #10b981;
+}
+
+/* 'all' 상태일 때는 인디케이터 숨김 또는 별도 처리 (원할 경우) */
+.switcher-indicator.all {
+  opacity: 0;
+  transform: scale(0.8);
 }
 
 .inline-filter-btn {
+  position: relative;
+  flex: 1;
   background: transparent;
-  border: 1px solid var(--border-light);
+  border: none;
   color: var(--text-dim);
-  font-size: 0.72rem;
-  font-weight: 700;
-  padding: 4px 12px;
-  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 800;
   cursor: pointer;
-  transition: all var(--transition-theme);
+  z-index: 2;
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
 }
 
-.inline-filter-btn:hover {
+.inline-filter-btn.active {
+  color: #ffffff;
+}
+
+.theme-light .inline-filter-btn.active {
+  color: #ffffff;
+}
+
+.inline-filter-btn:hover:not(.active) {
   color: var(--text-main);
-  border-color: var(--text-dim);
-}
-
-/* 일정 버튼 활성 */
-.inline-filter-btn.schedule.active {
-  background: var(--primary);
-  color: white;
-  border-color: var(--primary);
-  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.35);
-}
-
-/* 할 일 버튼 활성 */
-.inline-filter-btn.todo.active {
-  background: #10b981;
-  color: white;
-  border-color: #10b981;
-  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
 }
 
 .modern-close-btn {
@@ -152,33 +198,35 @@
 }
 
 .entry-card {
-  background: rgba(255, 255, 255, 0.02);
-  padding: 20px;
-  border-radius: 24px;
-  border: 1px solid var(--border-light);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 24px;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  /* 테마 전환은 전역 룰을 따르고, 크기 변환만 개별 적용, 축약 충돌 방지용 명시 지정 */
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              background-color var(--transition-theme),
-              border-color var(--transition-theme),
-              box-shadow var(--transition-theme),
-              color var(--transition-theme);
+  gap: 18px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.01);
 }
 
 .entry-card:hover, .entry-card:focus-within {
   background: rgba(255, 255, 255, 0.05);
   border-color: var(--primary);
-  transform: translateY(-4px);
-  box-shadow: var(--glass-shadow);
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 
+              0 0 0 4px rgba(99, 102, 241, 0.1);
+}
+
+.theme-light .entry-card {
+  background: white;
+  border-color: rgba(0, 0, 0, 0.05);
 }
 
 .theme-light .entry-card:hover, .theme-light .entry-card:focus-within {
   background: white;
   border-color: var(--primary);
-  transform: translateY(-4px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05), 0 -4px 10px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), 
+              0 0 0 4px rgba(79, 70, 229, 0.05);
 }
 
 .entry-input-main {
@@ -337,19 +385,27 @@
 .submit-pill {
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: var(--primary);
+  gap: 8px;
+  background: linear-gradient(135deg, var(--primary) 0%, #4f46e5 100%);
   color: white;
   border: none;
-  padding: 8px 16px;
-  border-radius: 20px;
+  padding: 10px 20px;
+  border-radius: 14px;
   font-weight: 800;
   cursor: pointer;
-  transition: var(--transition-theme);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
 }
 
-.submit-pill.todo { background: #10b981; }
-.submit-pill:hover { transform: scale(1.05); }
+.submit-pill.todo { 
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+.submit-pill:hover { 
+  transform: translateY(-2px) scale(1.05);
+  filter: brightness(1.1);
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+}
 
 /* --- Modern List View (목록) --- */
 .modern-list-view {
@@ -367,24 +423,19 @@
 
 .modern-item-card {
   background: rgba(255, 255, 255, 0.03);
-  padding: 16px 20px;
-  border-radius: 16px;
-  border: 1px solid transparent;
-  /* 테마 전환은 0.6s 명시, 크기/호버 지정 */
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              background-color var(--transition-theme),
-              border-color var(--transition-theme),
-              box-shadow var(--transition-theme),
-              color var(--transition-theme);
+  padding: 18px 24px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
-  box-shadow: none;
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(5px);
 }
 
 .theme-light .modern-item-card {
-  background: white;
-  border-color: transparent;
+  background: rgba(255, 255, 255, 0.6);
+  border-color: rgba(0, 0, 0, 0.03);
 }
 
 .modern-item-card.schedule { box-shadow: none; }
