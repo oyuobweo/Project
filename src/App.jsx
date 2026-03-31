@@ -198,14 +198,16 @@ function App() {
         </main>
       </div>
 
-      {selectedEvent && (
-        <EventDetailModal 
-          event={selectedEvent}
-          onUpdateEvent={updateEvent}
-          onDeleteEvent={deleteEvent}
-          onClose={() => setSelectedEvent(null)}
-        />
-      )}
+      {/* 실험을 위해 중앙 모달은 잠시 비활성화합니다. 
+       {selectedEvent && (
+         <EventDetailModal 
+           event={selectedEvent}
+           onUpdateEvent={updateEvent}
+           onDeleteEvent={deleteEvent}
+           onClose={() => setSelectedEvent(null)}
+         />
+       )} 
+      */}
     </div>
   );
 }
