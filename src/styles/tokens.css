@@ -4,26 +4,28 @@
  */
 
 :root {
-  /* Layout Dimensions */
-  --nav-width: 68px;
-  --context-width: 250px;
-  --header-height: 56px;
-  --nav-item-height: 48px;
+  /* Layout Dimensions - 반응형 비율 유지형 (1920px 기준 Scaling) */
+  --nav-width: clamp(60px, 4vw, 80px);
+  --context-width: clamp(200px, 14vw, 300px);
+  --board-width: clamp(320px, 22vw, 480px); /* 사이드보드 너비 추가 */
+  --header-height: clamp(48px, 6vh, 64px);
+  --nav-item-height: clamp(40px, 5vh, 56px);
   --dropdown-width: 120px;
   
-  /* Spacing */
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 12px;
-  --spacing-lg: 16px;
-  --spacing-xl: 24px;
-  --spacing-xxl: 32px;
+  /* Spacing - 유동적 간격 */
+  --spacing-xs: clamp(2px, 0.5vw, 6px);
+  --spacing-sm: clamp(6px, 1vw, 10px);
+  --spacing-md: clamp(10px, 1.5vw, 16px);
+  --spacing-lg: clamp(14px, 2vw, 24px);
+  --spacing-xl: clamp(20px, 3vw, 36px);
+  --spacing-xxl: clamp(28px, 4vw, 48px);
 
-  /* Radius */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  /* Radius - 80% Scaling (약간 더 정갈한 직선미 지향) */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 13px;
+  --radius-xl: 20px;
+  --radius-xxl: 26px;
   
   /* Animations */
   --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);

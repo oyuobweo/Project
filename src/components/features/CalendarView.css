@@ -151,11 +151,10 @@
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: auto;
   grid-auto-rows: 1fr;
-  gap: 12px;
+  gap: 4px;
   flex: 1;
   min-height: 0;
   width: 100%;
-  margin-bottom: 0;
 }
 
 /* 요일 헤더 */
@@ -164,34 +163,48 @@
   padding-bottom: 12px;
   font-size: 0.8rem;
   font-weight: 800;
-  color: #475569;
+  color: var(--text-dim);
   text-transform: uppercase;
   letter-spacing: 0.1em;
+}
+
+.calendar-weekday.sun { color: #f43f5e !important; }
+.calendar-weekday.sat { color: #3b82f6 !important; }
+
+/* 빈 날짜 표시 */
+.empty-list {
+  padding: 40px 0;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  font-style: italic;
 }
 
 /* 날짜 셀 */
 .calendar-day-cell {
   background: var(--bg-panel);
   border: 1px solid var(--border-light);
-  border-radius: 16px;
-  padding: 16px;
+  border-radius: 13px; /* 16px -> 13px (80%) */
+  padding: 6px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   cursor: pointer;
-  transition: all var(--transition-theme);
+  /* 테마 전환 시 투명도(opacity)가 지연되는 현상을 막기 위해 transition에서 제외 */
+  transition: transform var(--transition-theme), 
+              border-color var(--transition-theme), 
+              background-color var(--transition-theme), 
+              box-shadow var(--transition-theme);
   position: relative;
   min-height: 0;
+  min-width: 0; 
 }
 
-/* 오늘 날짜 */
+/* 오늘 날짜 (미니멀 강조로 변경) */
 .calendar-day-cell.today {
-  border-color: var(--primary);
-  background: var(--primary-glow);
-  transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(99, 102, 241, 0.15);
-  z-index: 10;
+  border-color: rgba(99, 102, 241, 0.3);
+  background: var(--bg-panel);
 }
 
 .calendar-day-cell.today .day-number {
@@ -199,27 +212,35 @@
   font-weight: 900;
 }
 
-/* 선택된 날짜 (오늘 제외) */
-.calendar-day-cell.selected-day:not(.today) {
-  background: var(--bg-panel) !important;
-  border-color: var(--border-light) !important;
-  transform: none !important;
-  box-shadow: none !important;
-}
-
-/* 호버 상태 */
-.calendar-day-cell:hover:not(.today) {
-  transform: scale(1.05) !important;
+/* 선택된 날짜 (강력한 강조로 변경) */
+.calendar-day-cell.selected-day {
   border-color: var(--primary) !important;
-  background: var(--bg-panel) !important;
+  background: var(--primary-glow) !important;
+  /* transform: scale 제거하여 호버링 효과 방지 */
+  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.18) !important;
   z-index: 20 !important;
 }
-
-.calendar-day-cell:hover .day-number { color: var(--primary) !important; }
 
 .calendar-day-cell.selected-day .day-number {
   color: var(--primary) !important;
   font-weight: 900;
+}
+
+/* 호버 상태 */
+.calendar-day-cell:hover:not(.selected-day) {
+  transform: scale(1.025) !important; /* 절반으로 축소 */
+  border-color: var(--primary) !important;
+  background: var(--bg-panel) !important;
+  z-index: 30 !important;
+}
+
+.calendar-day-cell:hover:not(.selected-day) .day-number { color: var(--primary) !important; }
+
+.day-cell-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* 날짜 중심 높이에 맞춤 */
+  width: 100%;
 }
 
 .day-number {
@@ -227,9 +248,41 @@
   font-weight: 600;
   color: var(--text-main);
   transition: color var(--transition-theme);
+  margin-top: 2px;  /* 상단 2px */
+  margin-left: 2px; /* 좌측 2px */
 }
 
-.other-month { opacity: 0.3; }
+.holiday-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #f43f5e;
+  background: rgba(244, 63, 94, 0.08);
+  padding: 1px 4px;
+  border-radius: 4px;
+  max-width: 70%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px; /* 날짜 번호의 margin-top과 맞춰 중심 높이 동기화 */
+}
+
+/* 토요일 파란색 및 공휴일 빨간색 표시 */
+.holiday-sun .day-number,
+.calendar-weekday.sun {
+  color: #f43f5e !important;
+}
+
+.saturday:not(.holiday-sun) .day-number,
+.calendar-weekday.sat {
+  color: #3b82f6 !important;
+}
+
+.other-month { 
+  opacity: 0.3; 
+  transition: opacity 0.1s ease-out; /* 매우 빠른 전환으로 날짜 변경과 동기화 */
+}
+.other-month.today,
+.other-month.selected-day { opacity: 1; }
 .other-month:hover { opacity: 1; }
 
 /* 라이트 모드 날짜 셀 */
@@ -389,3 +442,4 @@
   font-size: 0.85rem;
   font-style: italic;
 }
+

@@ -222,7 +222,7 @@
 .context-column.glass-panel { border: none; }
 
 .column-header {
-  height: 56px;
+  height: var(--header-height); /* 56px -> var(--header-height)로 변경하여 정렬 동기화 */
   display: flex;
   align-items: center;
   padding: 0 20px;
@@ -407,7 +407,7 @@
 }
 
 .main-view-column .column-header {
-  height: 56px;
+  height: var(--header-height); /* 56px -> var(--header-height)로 변경하여 정렬 동기화 */
   display: flex;
   align-items: center;
   padding: 0 20px;

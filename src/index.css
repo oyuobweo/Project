@@ -14,26 +14,30 @@
   --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   
   --glass-blur: blur(12px);
+  --transition-theme: 0.3s ease;
 }
 
 /* 라이트 모드 - 안티 그래비티 스타일의 깨끗하고 전문적인 테마 */
 .theme-light {
   --bg-deep: #f8fafc;
   --bg-panel: rgba(255, 255, 255, 0.8);
-  --primary: #4f46e5; /* 약간 더 짙은 보라 */
+  --primary: #4f46e5; 
   --primary-glow: rgba(79, 70, 229, 0.15);
   --text-main: #0f172a;
   --text-dim: #475569;
   --border-light: rgba(0, 0, 0, 0.1);
-  --glass-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.03); /* 훨씬 연하고 좁은 그림자 */
+  --glass-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.03);
+}
+
+html {
+  font-size: clamp(14px, 0.8vw + 8px, 18px); /* 창 크기에 따른 유동적 폰트 크기 */
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: inherit; /* 모든 요소가 부모의 폰트를 상속받도록 설정 */
-  /* 모든 요소에 기본적인 테마 전환(색상 계열)을 부여 (하위 transition 단축 속성에 의해 덮어써질 수 있음) */
+  font-family: inherit;
   transition-property: background-color, border-color, color, fill, stroke, box-shadow;
   transition-duration: var(--transition-theme);
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -47,9 +51,9 @@ body {
     radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
     radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
   min-height: 100vh;
-  overflow-x: hidden;
+  min-width: 1024px;
+  overflow-x: auto;
   -webkit-font-smoothing: antialiased;
-  /* 테마 전환 시 부드러운 변화 추가 */
   transition: background-color var(--transition-theme), color var(--transition-theme);
 }
 
@@ -62,12 +66,12 @@ body {
   box-shadow: var(--glass-shadow);
 }
 
-/* 드롭다운 공통 스타일 (사용자 요청 반영: 동일 너비 & 중앙 정렬) */
+/* 드롭다운 공통 스타일 */
 .custom-dropdown-btn {
   width: var(--dropdown-width);
   display: flex;
   align-items: center;
-  justify-content: center; /* 항목 가운데 배치 */
+  justify-content: center;
   gap: 8px;
   padding: 10px 16px;
   background: rgba(255, 255, 255, 0.05);
@@ -86,7 +90,7 @@ body {
 }
 
 .custom-dropdown-menu {
-  width: var(--dropdown-width); /* 버튼과 동일한 너비 유지 */
+  width: var(--dropdown-width);
   position: absolute;
   margin-top: 8px;
   background: #141821;
@@ -102,7 +106,7 @@ body {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center; /* 항목 가운데 배치 */
+  justify-content: center;
   padding: 8px 12px;
   border-radius: 6px;
   color: var(--text-dim);
@@ -122,16 +126,7 @@ body {
 }
 
 /* 스크롤바 디자인 정돈 */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }

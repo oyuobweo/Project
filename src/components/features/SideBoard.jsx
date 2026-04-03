@@ -36,101 +36,104 @@ const DailyItem = ({ ev, onToggleTodo, onDeleteEvent, onShowDetail }) => (
 
 /**
  * @component SideBoardDetail
- * @description 사이드바 내에서 전면으로 표시되는 상세 정보 뷰
+ * @description 생산성 중심의 v4 고도화 상세 정보 뷰
  */
 const SideBoardDetail = ({ ev, onBack, onUpdateEvent, onDeleteEvent }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [inputText, setInputText] = useState(ev.text);
   const [description, setDescription] = useState(ev.description || '');
-
   const handleUpdate = () => {
-    onUpdateEvent({ ...ev, text: inputText, description: description });
+    onUpdateEvent({ 
+      ...ev, 
+      text: inputText, 
+      description: description
+    });
     setIsEditing(false);
   };
 
   return (
-    <div className="sb-detail-view-v3">
-      <header className="sb-header-actions">
-        <button className="sb-close-btn" onClick={onBack}><X size={24} /></button>
-      </header>
-      
+    <div className="sb-detail-view-v4">
       <div className="sb-detail-scroll-area">
-        {/* 헤더 섹션: 제목 및 기본 정보 */}
-        <section className="sb-section-block title-block">
-          <div className="title-row">
-            <div className="title-left">
-              <Circle className="status-circle" size={24} />
-              {isEditing ? (
-                <input 
-                  className="sb-title-input-v3" 
-                  value={inputText} 
-                  onChange={(e) => setInputText(e.target.value)}
-                  autoFocus
-                />
-              ) : (
-                <h2 className="sb-title-readonly-v3">{inputText}</h2>
-              )}
-            </div>
-            <Star className="star-icon" size={20} />
-          </div>
-          <div className="add-step-v3"><Plus size={16} /> 단계 추가</div>
-        </section>
+        {/* 1. 상단 액션 바: 이미지 위치와 동일하게 최상단 배치 */}
+        <header className="sb-action-header-v4">
+          <button className="sb-action-icon-btn" onClick={onBack} title="뒤로 가기">
+            <CornerUpLeft size={18} />
+          </button>
+          <button className="sb-action-icon-btn" onClick={() => setIsEditing(true)} title="편집">
+            <Edit3 size={18} />
+          </button>
+          <button className="sb-action-icon-btn" onClick={() => { if(window.confirm('삭제하시겠습니까?')) { onDeleteEvent(ev.id); onBack(); } }} title="삭제">
+            <Trash2 size={18} />
+          </button>
+        </header>
 
-        {/* 메인 정보 섹션: 일정/할일 타입 */}
-        <section className="sb-section-block info-block">
-          <div className="info-item">
-            <Clock size={18} /> <span>{ev.type === 'schedule' ? '본 일정이 일정으로 등록되었습니다' : '할 일로 분류됨'}</span>
-          </div>
-          <div className={`info-item ${ev.type}`}>
-            <CalendarIcon size={18} /> <span>{format(new Date(ev.date), 'M월 d일 E요일', { locale: ko })}까지</span>
-          </div>
-        </section>
-
-        {/* 메모 섹션 */}
-        <section className="sb-section-block memo-block">
-          {isEditing ? (
-            <textarea 
-              className="sb-memo-input-v3" 
-              value={description} 
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="메모 추가..."
-            />
-          ) : (
-            <div className="sb-memo-readonly-v3">
-              {description || '메모 추가...'}
+        <div className="sb-unified-canvas">
+          {/* 2. 제목 섹션 */}
+          <section className="hero-block">
+            <div className="title-row">
+              <div className="title-left">
+                {isEditing ? (
+                  <input 
+                    className="sb-title-input-v4" 
+                    value={inputText} 
+                    onChange={(e) => setInputText(e.target.value)}
+                    autoFocus
+                  />
+                ) : (
+                  <h2 className="sb-title-readonly-v4">{inputText}</h2>
+                )}
+              </div>
             </div>
-          )}
-        </section>
+          </section>
+
+          {/* 3. 메타 정보 및 구분선 */}
+          <div className="sb-meta-bar-v4">
+            <div className="info-item">
+              <Clock size={16} /> 
+              <span>{ev.type === 'schedule' ? '일정' : '할 일'}</span>
+            </div>
+            <div className={`info-item date ${ev.type}`}>
+              <CalendarIcon size={16} /> 
+              <span>{format(new Date(ev.date), 'M월 d일 (E)', { locale: ko })}</span>
+            </div>
+          </div>
+
+          <div className="sb-content-divider" /> 
+
+          {/* 4. 메모 구역 */}
+          <div className="memo-area">
+            {isEditing ? (
+              <textarea 
+                className="sb-memo-input-v4" 
+                value={description} 
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="내용을 입력하세요..."
+              />
+            ) : (
+              <div className="sb-memo-readonly-v4">
+                {description || "기록된 메모가 없습니다."}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
-      <footer className="sb-footer-v3">
-        {isEditing ? (
+      {/* 편집 모드일 때만 푸터 노출 - 이미지와 동일한 버튼 배치 */}
+      {isEditing && (
+        <footer className="sb-footer-v4">
           <div className="edit-actions-row">
-            <button className="sb-cancel-btn-v3" onClick={() => setIsEditing(false)}>취소</button>
-            <button className="sb-save-btn-v3" onClick={handleUpdate}>저장 완료</button>
+            <button className="sb-cancel-btn-v4" onClick={() => setIsEditing(false)}>취소</button>
+            <button className="sb-save-btn-v4" onClick={handleUpdate}>변경 내용 저장</button>
           </div>
-        ) : (
-          <div className="status-bar-v3">
-            <span className="creation-text">{format(new Date(ev.date), 'M월 d일 E요일', { locale: ko })}에 생성됨</span>
-            <div className="footer-icons-v3">
-              <button className="sb-edit-btn-v3" onClick={() => setIsEditing(true)}>
-                <Edit3 size={18} />
-              </button>
-              <button className="sb-trash-btn-v3" onClick={() => { if(confirm('삭제하시겠습니까?')) { onDeleteEvent(ev.id); onBack(); } }}>
-                <Trash2 size={18} />
-              </button>
-            </div>
-          </div>
-        )}
-      </footer>
+        </footer>
+      )}
     </div>
   );
 };
 
 /**
  * @component SideBoard
- * @description 사이드 패널에서 선택된 날짜의 상세요약 및 입력 폼 제공
- * 마스터 룰 0-7번 전면 적용하여 고수준의 예외 처리와 로깅 보장.
+ * @description 사이드 패널 마스터 컴포넌트
  */
 function SideBoard({ 
   selectedDate, 
@@ -143,38 +146,36 @@ function SideBoard({
   onEventSelect, 
   onClose 
 }) {
-  const [type, setType] = useState('schedule');         // 입력 폼 타입 ('schedule' | 'todo')
-  const [filterType, setFilterType] = useState('schedule');  // 목록 필터 타입 ('schedule' | 'todo' | 'all')
+  const [type, setType] = useState('schedule');         
+  const [filterType, setFilterType] = useState('schedule');  
   const [inputText, setInputText] = useState('');
   const [description, setDescription] = useState('');
   const [editingId, setEditingId] = useState(null);
-  const [detailEvent, setDetailEvent] = useState(null); // 전면 상세 뷰를 위한 이벤트 상태
+  const [detailEvent, setDetailEvent] = useState(null); 
 
-  // 필터 및 입력 타입 스위칭 핸들러
-  const handleTypeSwitch = useCallback((newType) => {
-    setType(newType);
-    setFilterType(newType);
-  }, []);
-
-  const handleEditStart = useCallback((ev) => {
-    setEditingId(ev.id);
-    setType(ev.type);
-    setInputText(ev.text);
-    setDescription(ev.description || '');
-  }, []);
-
-  const handleCancelEdit = useCallback(() => {
+  // 날짜 변경 시 모든 상태 초기화
+  React.useEffect(() => {
+    setDetailEvent(null);
     setEditingId(null);
     setInputText('');
     setDescription('');
-  }, []);
+    logger.info('날짜 변경 감지에 따른 보드 리셋', { date: selectedDate });
+  }, [selectedDate]);
+
+  // 필터 및 입력 타입 스위칭/토글 핸들러
+  const handleTypeToggle = useCallback((clickedType) => {
+    const nextType = (clickedType === filterType) 
+      ? (clickedType === 'schedule' ? 'todo' : 'schedule') 
+      : clickedType;
+
+    setType(nextType);
+    setFilterType(nextType);
+    logger.info('필터 토글', { from: filterType, to: nextType });
+  }, [filterType]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!inputText.trim()) {
-      logger.warn('빈 텍스트 입력 거부', 'FORM_VAL_01');
-      return;
-    }
+    if (!inputText.trim()) return;
 
     const payload = { 
       text: inputText, 
@@ -195,7 +196,6 @@ function SideBoard({
     setDescription('');
   };
 
-  // 비즈니스 로직: 선택된 날짜 및 필터에 따른 데이터 필터링
   const dailyEvents = events
     .filter(ev => format(new Date(ev.date), 'yyyy-MM-dd') === format(selectedDate, 'yyyy-MM-dd'))
     .filter(ev => filterType === 'all' || ev.type === filterType);
@@ -218,13 +218,13 @@ function SideBoard({
                 <div className={`switcher-indicator ${filterType}`} />
                 <button
                   className={`inline-filter-btn ${filterType === 'schedule' ? 'active' : ''}`}
-                  onClick={() => handleTypeSwitch('schedule')}
+                  onClick={() => handleTypeToggle('schedule')}
                 >
                   일정
                 </button>
                 <button
                   className={`inline-filter-btn ${filterType === 'todo' ? 'active' : ''}`}
-                  onClick={() => handleTypeSwitch('todo')}
+                  onClick={() => handleTypeToggle('todo')}
                 >
                   할 일
                 </button>
@@ -244,7 +244,6 @@ function SideBoard({
                   placeholder={type === 'schedule' ? "무엇을 계획하시나요?" : "오늘의 할 일은?"}
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
-                  autoFocus
                   required
                 />
                 <textarea 
@@ -254,16 +253,7 @@ function SideBoard({
                   onChange={(e) => setDescription(e.target.value)}
                 />
                 <div className="entry-footer">
-                  <div 
-                    className="mode-indicator clickable" 
-                    onClick={() => onNavigateSubTab(type)}
-                    title={`${type === 'schedule' ? '내 일정' : '할 일'}으로 이동`}
-                  >
-                    {type === 'schedule' ? <CalendarIcon size={14} /> : <CheckSquare size={14} />}
-                    {editingId && <span>수정 모드</span>}
-                  </div>
                   <div className="entry-actions">
-                    {editingId && <button type="button" className="action-link" onClick={handleCancelEdit}>취소</button>}
                     <button type="submit" className={`submit-pill ${type}`}>
                       {editingId ? <Check size={18} /> : <Plus size={18} />}
                       <span>{editingId ? '완료' : '등록'}</span>

@@ -59,9 +59,24 @@ function App() {
   };
 
   const handleDaySelect = (date) => {
-    setSelectedDate(date);
-    setIsSideBoardOpen(true);
-    logger.info('날짜 선택됨', { date: date.toDateString() });
+    // 토글 로직: 이미 선택된 날짜를 다시 클릭하면 선택 해제 (기본 상태로 복구)
+    const isAlreadySelected = selectedDate && date && 
+      selectedDate.getFullYear() === date.getFullYear() &&
+      selectedDate.getMonth() === date.getMonth() &&
+      selectedDate.getDate() === date.getDate();
+
+    if (isAlreadySelected) {
+      setSelectedDate(new Date()); // 선택 해제 시 오늘 날짜로 복구 (1월 1일 방지)
+      // setIsSideBoardOpen(false); // 선택 해제 시 사이드보드도 함께 닫아 기본 레이아웃으로 복구
+    } else {
+      setSelectedDate(date);
+      setIsSideBoardOpen(true);
+    }
+    
+    logger.info('날짜 선택 상태 변경', { 
+      action: isAlreadySelected ? 'DESELECT' : 'SELECT',
+      date: date ? date.toDateString() : 'null' 
+    });
   };
 
   // 컨텐츠 렌더링 로직 (기존 UI 흐름 유지)
