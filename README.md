@@ -12,17 +12,20 @@
 - **Architecture**: Harmony v2.1 SRP Hook Architecture
 
 ## ▣ 시스템 핵심 지침 (Agent Rules)
-본 프로젝트는 **Antigravity Lead Engineer**의 직접적인 관리를 받으며, 모든 작업은 아래 지침을 최우선으로 준수합니다.
+본 프로젝트는 **Antigravity Lead Engineer**의 직접적인 관리를 받으며, 아래 지침을 최우선으로 준수합니다.
 
-- **지침 파일**: [PROJECT_RULES.md](.claude/rules/PROJECT_RULES.md) (프로젝트 귀속형 시스템)
-- **핵심 프로세스**: 문제 정의 → 설계(Design Summary) → 구현 계획(TDD) → 단위 테스트 → 행동 요약 → 셀프 리뷰
-- **문서화**: 모든 주요 태스크는 `docs/plan_*.md`에 기록되어 히스토리를 보존함.
+- **마스터 지침**: [.claude/rules/PROJECT_RULES.md](.claude/rules/PROJECT_RULES.md) (AIRIS v2.1)
+- **기술 표준**: [.claude/rules/ENGINEERING_STANDARDS.md](.claude/rules/ENGINEERING_STANDARDS.md) (Coding Standards)
+- **웹 패턴**: [.claude/rules/WEB_BEST_PRACTICES.md](.claude/rules/WEB_BEST_PRACTICES.md) (React/Web Patterns)
 
 ## ▣ 폴더 구조 가이드
 - `src/`: 핵심 애플리케이션 로직 및 컴포넌트
-- `docs/`: 히스토리 및 태스크 설계서 보관소
+- `docs/`: 
+  - `plans/`: 태스크 설계서 보관소
+  - `adr/`: 아키텍처 결정 기록 (ADR)
+- `.github/`: GitHub Actions 워크플로우 및 협업 템플릿 (CI/CD)
 - `.claude/rules/`: 프로젝트 전용 AI 에이전트 지침서 (Git 동기화 대상)
-- `backups/`: 시스템 초기화 및 보안 스캔용 레거시 스크립트 보관
+- `backups/`: 시스템 백업 및 유틸리티 스크립트
 
 ## ▣ 실행 및 관리 가이드
 ### 1. 개발 서버 실행
