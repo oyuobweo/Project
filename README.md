@@ -1,6 +1,6 @@
-# 🚀 Work Info Project (Lead Engineer Dashboard)
+# 🚀 Work Info Project (AIRIS Dashboard)
 
-> **Lead Engineer Agent**: Antigravity v2.1 (Master Full)
+> **Lead Engineer Agent**: AIRIS v2.1 (A.I.R.I.S)
 > **Status**: Optimized for Remote Collaboration (Multi-PC Sync Ready)
 
 ---
