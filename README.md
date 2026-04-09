@@ -27,20 +27,28 @@
 - `.claude/rules/`: 프로젝트 전용 AI 에이전트 지침서 (Git 동기화 대상)
 - `backups/`: 시스템 백업 및 유틸리티 스크립트
 
+## ▣ 퀵 스타트 (Quick Start)
+새로운 환경에서 가장 먼저 해야 할 3단계입니다.
+1. `git pull` (최신 동기화)
+2. `npm install` (라이브러리 설치)
+3. `.\backups\harmony-setup.ps1` (AI 지능 동기화/최초 1회)
+
+> **상세 가이드**: [시작하기 가이드 (GETTING_STARTED.md)](docs/GETTING_STARTED.md)
+
 ## ▣ 실행 및 관리 가이드
 ### 1. 개발 서버 실행
 ```powershell
 npm run dev
 ```
 
-### 2. 원격 동기화 (회사 ↔ 집)
-본 프로젝트는 AI 지침서가 프로젝트 내부에 귀속되어 있으므로, 어디서든 아래 명령어로 동일한 작업 환경을 구축할 수 있습니다.
+### 2. 원격 동기화 (Multi-PC)
+본 프로젝트는 AI 지침서가 프로젝트 내부에 귀속되어 시스템이 자동 동기화됩니다.
 ```powershell
 git pull
 ```
 
-### 3. 유틸리티 (backups 폴더 내)
-- **환경 복구**: `powershell .\backups\harmony-setup.ps1`
+### 3. 시스템 유틸리티
+- **AI 환경 구축**: `powershell .\backups\harmony-setup.ps1`
 - **보안 스캔**: `powershell .\backups\scan.ps1`
 
 ---

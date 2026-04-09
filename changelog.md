@@ -2,6 +2,8 @@
 
 ## [2026-04-10] GitHub Settings Integration & Project Reorganization
 ### Added
+- `docs/GETTING_STARTED.md`: Detailed environment setup guide for new PCs and multi-PC developers.
+- `README.md`: Added "Quick Start" section for immediate onboarding.
 - `.github/` folder: Integrated workflows (CI/CI), Issue templates, and Pull Request templates from `everything-claude-code`.
 - `.claude/rules/ENGINEERING_STANDARDS.md`: technical coding styles and standards.
 - `.claude/rules/WEB_BEST_PRACTICES.md`: React/Web development patterns and hooks guidance.
