@@ -15,5 +15,11 @@ export default defineConfig({
     watch: {
       usePolling: true, // 파일 시스템 알림 누락 방지
     }
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/test/setup.js',
+    include: ['src/**/*.{test,spec}.{js,jsx}'],
   }
 })

@@ -131,13 +131,13 @@ function CalendarView({ events, selectedDate, onDaySelect }) {
                 {holidayName && <span className="holiday-label">{holidayName}</span>}
               </div>
               <div className="event-strip-list">
-                {dayEvents.slice(0, 2).map((ev, idx) => (
+                {dayEvents.slice(0, 4).map((ev, idx) => (
                   <div key={idx} className={`event-mini-strip ${ev.type}`}>
                     {ev.title || ev.text}
                   </div>
                 ))}
-                {dayEvents.length > 2 && (
-                  <div className="event-more-count">+{dayEvents.length - 2}</div>
+                {dayEvents.length > 4 && (
+                  <div className="event-more-count">+{dayEvents.length - 4}</div>
                 )}
               </div>
             </div>
