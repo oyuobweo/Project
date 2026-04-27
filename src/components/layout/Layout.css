@@ -140,12 +140,16 @@
 
 .side-btn {
   width: 100%;
-  height: var(--nav-item-height);
+  height: auto; /* 고정 높이 해제 (라벨 포함 공간 확보) */
+  min-height: 64px;
+  padding: 10px 0;
   background: transparent;
   border: none;
   display: flex;
+  flex-direction: column; /* 수직 정렬 */
   align-items: center;
   justify-content: center;
+  gap: 4px; /* 아이콘과 텍스트 사이 간격 */
   color: #64748b;
   cursor: pointer;
   position: relative;
@@ -153,12 +157,20 @@
 }
 
 .icon-frame {
-  width: 42px;
-  height: 42px;
+  width: 32px; /* 텍스트가 들어가며 살짝 소형화 */
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
+  border-radius: 10px;
+  transition: inherit;
+}
+
+.side-btn-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: inherit;
+  letter-spacing: -0.02em;
   transition: inherit;
 }
 
@@ -168,7 +180,12 @@
   transform: scale(1.05);
 }
 
-.side-btn.active .icon-frame {
+.side-btn:hover .side-btn-label {
+  color: var(--primary); /* 마우스 호버 시 텍스트도 동일하게 프라이머리 컬러로 변경 */
+}
+
+.side-btn.active .icon-frame,
+.side-btn.active .side-btn-label {
   background: transparent;
   color: #818cf8;
 }
@@ -275,6 +292,61 @@
   letter-spacing: 0.08em;
   margin-bottom: 6px;
   padding-left: 8px;
+}
+
+/* 캘린더 탭 컨텍스트 스택 */
+.calendar-context-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+}
+
+.quick-stats-section {
+  margin-top: auto; /* 하단으로 밀어 여백 활용 */
+  padding-top: 24px;
+}
+
+.stats-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-top: 10px;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 12px;
+}
+
+.stat-lbl {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-dim);
+}
+
+.stat-val {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.stat-progress {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), #2dd4bf);
+  border-radius: 10px;
+  transition: width 0.8s ease;
 }
 
 .menu-item {

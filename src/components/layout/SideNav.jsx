@@ -21,6 +21,7 @@ function SideNav({ menuItems, activeTab, onTabChange }) {
             title={item.label}
           >
             <div className="icon-frame">{item.icon}</div>
+            <span className="side-btn-label">{item.label}</span>
             {activeTab === item.id && <div className="side-indicator" />}
           </button>
         ))}
@@ -33,6 +34,7 @@ function SideNav({ menuItems, activeTab, onTabChange }) {
             <div className="icon-frame">
               <Settings size={22} />
             </div>
+            <span className="side-btn-label">설정</span>
           </button>
         </div>
       </nav>

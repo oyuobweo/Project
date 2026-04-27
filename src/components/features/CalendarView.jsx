@@ -99,15 +99,26 @@ function CalendarView({ events, selectedDate, onDaySelect }) {
 
         <div className="calendar-nav">
           <button onClick={prevMonth}><ChevronLeft size={18} /></button>
-          <button className="today-btn" onClick={() => setCurrentMonth(startOfMonth(new Date()))}>오늘</button>
+          <button 
+            className="today-btn" 
+            onClick={() => {
+              const today = new Date();
+              setCurrentMonth(startOfMonth(today));
+              onDaySelect(today); // 오늘 버튼 클릭 시 선택 상태도 오늘로 동기화
+            }}
+          >
+            오늘
+          </button>
           <button onClick={nextMonth}><ChevronRight size={18} /></button>
         </div>
       </div>
 
-      <div className="calendar-grid">
+      <div className="calendar-weekday-row">
         {['일', '월', '화', '수', '목', '금', '토'].map(d => (
           <div key={d} className={`calendar-weekday ${d === '일' ? 'sun' : d === '토' ? 'sat' : ''}`}>{d}</div>
         ))}
+      </div>
+      <div className="calendar-grid">
         {days.map(day => {
           const dayEvents = events.filter(ev => isSameDay(new Date(ev.date), day));
           const holidayName = getHoliday(day);

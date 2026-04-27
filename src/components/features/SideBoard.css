@@ -38,24 +38,27 @@
 }
 
 .sideboard-header {
-  padding: 24px 24px 16px;
+  padding: 16px 16px 12px; /* 24px -> 16px로 좌우 패딩 대폭 축소 */
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
+  gap: 8px; /* 헤더 좌우 박스 간격 추가 */
 }
 
 .header-left-area {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 8px; /* 16px -> 8px */
+  flex: 1; /* 남는 공간 차지 */
+  flex-wrap: wrap; /* 창이 좁을 경우 자동 줄바꿈 허용 */
 }
 
 .header-date {
-  font-size: 1.6rem;
+  font-size: 1.15rem; /* 1.6rem -> 1.15rem (70% 스케일 다운) */
   font-weight: 900;
   color: var(--text-main);
-  letter-spacing: -0.04em; /* 더 좁게 하여 모던함 강조 */
+  letter-spacing: -0.04em; 
   white-space: nowrap;
   background: linear-gradient(135deg, var(--text-main) 0%, var(--text-dim) 100%);
   -webkit-background-clip: text;
@@ -66,27 +69,27 @@
 .header-right-area {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px; /* 8px -> 4px */
 }
 
 .v-divider {
   width: 1px;
-  height: 16px;
+  height: 14px;
   background: var(--border-light);
-  margin-right: 4px;
+  margin-right: 2px;
   opacity: 0.5;
 }
 
-/* 날짜 옆 인라인 필터 스위처 (캡슐화된 슬라이딩 컨트롤) */
+/* 날짜 옆 인라인 필터 스위처 */
 .inline-switcher {
   position: relative;
   display: flex;
   background: rgba(255, 255, 255, 0.06);
-  border-radius: 11px; /* 14px -> 11px (80%) */
-  padding: 3px;
+  border-radius: 9px; /* 11px -> 9px */
+  padding: 2px;
   border: 1px solid rgba(255, 255, 255, 0.03);
-  min-width: 130px; /* 2개 버튼 규격으로 축소 */
-  height: 32px;
+  min-width: 100px; /* 130px -> 100px 축소 */
+  height: 28px; /* 32px -> 28px 축소 */
   overflow: hidden;
 }
 
@@ -97,12 +100,12 @@
 
 .switcher-indicator {
   position: absolute;
-  top: 3px;
-  left: 3px;
-  width: calc(50% - 3px); /* 2등분으로 복구 */
-  height: calc(100% - 6px);
+  top: 2px;
+  left: 2px;
+  width: calc(50% - 2px); 
+  height: calc(100% - 4px);
   background: var(--primary);
-  border-radius: 9px; /* 11px -> 9px (80%) */
+  border-radius: 7px; 
   transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   z-index: 1;
@@ -124,7 +127,7 @@
   background: transparent;
   border: none;
   color: var(--text-dim);
-  font-size: 0.75rem;
+  font-size: 0.7rem; /* 0.75rem -> 0.7rem */
   font-weight: 800;
   cursor: pointer;
   z-index: 2;
@@ -151,8 +154,8 @@
   background: transparent;
   border: none;
   color: var(--text-dim);
-  width: 36px;
-  height: 36px;
+  width: 28px; /* 36px -> 28px */
+  height: 28px; /* 36px -> 28px */
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -164,15 +167,15 @@
 .modern-close-btn:hover {
   background: transparent;
   color: var(--text-main);
-  transform: scale(1.25);
+  transform: scale(1.15); /* 1.25 -> 1.15 축소 */
 }
 
 .modern-body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 8px 24px 24px; /* 호버 시 위쪽 여유 공간 확보 (상단 잘림 방지) */
-  gap: 16px;
+  padding: 4px 16px 16px; /* 24px -> 16px로 대폭 축소 */
+  gap: 12px; /* 16px -> 12px */
   overflow: hidden;
 }
 
@@ -180,7 +183,7 @@
   background: rgba(255, 255, 255, 0.08);
   padding: 2px 10px;
   border-radius: 20px;
-  font-size: 0.8rem;
+  font-size: 0.75rem; /* 0.8rem -> 0.75rem */
   font-weight: 700;
   color: var(--primary);
 }
@@ -189,32 +192,35 @@
 .modern-entry-form {
   flex-shrink: 0;
   position: relative;
-  z-index: 50; /* 목록보다 최상위에 위치하도록 상향 조정 */
-  margin-top: 4px; /* 헤더와의 적정 간격 확보 */
+  z-index: 50; 
+  margin-top: 4px; 
 }
 
 /* --- Modern Entry Form (입력 카드: 프리미엄 스타일 복구) --- */
 .entry-card {
   background: rgba(255, 255, 255, 0.03);
-  padding: 24px;
-  border-radius: 22px; /* 28px -> 22px (80%) */
+  padding: 16px; /* 24px -> 16px 축소 */
+  border-radius: 16px; /* 22px -> 16px 축소 */
   border: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 12px; /* 18px -> 12px */
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.01);
 }
 
 .sb-isolation-layer {
-  width: 440px;
-  height: calc(100% - 32px); /* 캘린더 그리드 높이와 조화롭도록 조정 */
-  margin: 16px 16px 16px 0;
+  width: 380px; /* 사용자 요청: 308px -> 380px로 확장 */
+  /* 부모 컨테이너(main-scroll-area)의 상하 패딩 24px씩을 거슬러 올라가기 위해 강제 확장 & 음수 마진 적용 */
+  height: calc(100% + 48px); 
+  margin: -24px -32px -24px 0; /* 상단, 우측, 하단 여백을 마이너스 처리해 화면 끝으로 밀착 */
   position: relative;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
   contain: layout paint;
+  border-left: 1px solid var(--border-light);
+  background-color: var(--bg-panel);
 }
 
 .modern-side-board {
@@ -225,19 +231,18 @@
   flex-direction: column;
   position: relative;
   transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s;
-  overflow: visible; /* 3D 컨텍스트 유지를 위해 가시성 확보 */
-  border-radius: 24px;
-  background: transparent !important; /* 부모 배경 완전 제거 (각형 잔상 소멸) */
+  overflow: visible; 
+  border-radius: 0; /* 각형 컨텍스트 패널 모방 */
+  background: transparent !important; 
   border: none !important;
   z-index: 10;
   perspective: 1500px;
-  /* 그림자는 레이아웃 방해를 최소화하도록 설정 */
-  filter: drop-shadow(-15px 0 30px rgba(0, 0, 0, 0.1));
+  filter: none; /* 플로팅 그림자 제거 */
 }
 
 .theme-light .modern-side-board {
   background: transparent !important;
-  filter: drop-shadow(-10px 0 20px rgba(0, 0, 0, 0.04));
+  filter: none;
 }
 
 /* 3D 회전 핵심 컨테이너 */
@@ -248,7 +253,7 @@
   transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
   transform-style: preserve-3d;
   background: transparent;
-  border-radius: 24px;
+  border-radius: 0; /* 라운드 제거 */
 }
 
 .sb-flipper.is-flipped {
@@ -265,25 +270,17 @@
   backface-visibility: hidden;
   display: flex;
   flex-direction: column;
-  border-radius: 24px;
-  /* 실제 시각 요소는 여기서만 렌더링 */
-  background: var(--bg-panel);
-  backdrop-filter: blur(28px);
-  -webkit-backdrop-filter: blur(28px);
-  border: 1px solid var(--border-light);
-  clip-path: inset(0 round 24px);
-  -webkit-clip-path: inset(0 round 24px);
+  border-radius: 0; /* 라운드 제거 */
+  background: transparent; /* 배경은 부모 패널이 담당 */
+  border: none; /* 프론트/백 개별 보더 제거 */
+  clip-path: none;
+  -webkit-clip-path: none;
   box-sizing: border-box;
 }
 
 .theme-light .sb-front, .theme-light .sb-back {
-  background: rgba(255, 255, 255, 0.85);
-  border-color: rgba(0, 0, 0, 0.06);
-}
-
-.theme-light .sb-front, .theme-light .sb-back {
-  background: rgba(255, 255, 255, 0.85);
-  border-color: rgba(0, 0, 0, 0.05);
+  background: transparent;
+  border-color: transparent;
 }
 
 .sb-back {

@@ -15,14 +15,6 @@ function ContextPanel({ isOpen, onToggle, children }) {
       <div className="column-body">
         {isOpen && children}
       </div>
-      
-      <button 
-        className="panel-toggle-btn"
-        onClick={handleToggle}
-        title={isOpen ? "패널 접기" : "패널 펴기"}
-      >
-        {isOpen ? <ChevronLeft size={14} /> : <ChevronRight size={14} />}
-      </button>
     </aside>
   );
 }

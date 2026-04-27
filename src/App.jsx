@@ -14,6 +14,7 @@ import SideBoard from './components/features/SideBoard';
 import ScheduleView from './components/features/ScheduleView';
 import TodoListView from './components/features/TodoListView';
 import EventDetailModal from './components/features/EventDetailModal';
+import MiniCalendar from './components/common/MiniCalendar';
 
 import './App.css';
 
@@ -91,16 +92,37 @@ function App() {
         );
       case TABS.CALENDAR:
         return (
-          <div className="menu-group">
-            {Object.entries(SUB_TABS.CALENDAR).map(([key, value]) => (
-              <button 
-                key={key}
-                className={`menu-item ${selectedSubTab === value ? 'active' : ''}`}
-                onClick={() => setSelectedSubTab(value)}
-              >
-                {key === 'DEFAULT' ? '캘린더' : key === 'SCHEDULE' ? '내 일정' : '할 일'}
-              </button>
-            ))}
+          <div className="calendar-context-stack">
+            {/* 1. 상단 미니 달력 구역 (뷰 전용 독립 상태) */}
+            <MiniCalendar />
+            
+            {/* 2. 중앙 탭 메뉴 구역 */}
+            <div className="menu-group">
+              <div className="group-label">View Selection</div>
+              {Object.entries(SUB_TABS.CALENDAR).map(([key, value]) => (
+                <button 
+                  key={key}
+                  className={`menu-item ${selectedSubTab === value ? 'active' : ''}`}
+                  onClick={() => setSelectedSubTab(value)}
+                >
+                  {key === 'DEFAULT' ? '캘린더' : key === 'SCHEDULE' ? '내 일정' : '할 일'}
+                </button>
+              ))}
+            </div>
+
+            {/* 3. 하단 여백 활용: 간편 통계 (Quick Info) */}
+            <div className="quick-stats-section">
+              <div className="group-label">Today's Summary</div>
+              <div className="stats-card">
+                <div className="stat-row">
+                  <span className="stat-lbl">남은 일정</span>
+                  <span className="stat-val">{events.filter(e => !e.completed).length}</span>
+                </div>
+                <div className="stat-progress">
+                  <div className="progress-fill" style={{ width: '65%' }} />
+                </div>
+              </div>
+            </div>
           </div>
         );
       case TABS.SETTINGS:

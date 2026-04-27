@@ -7,7 +7,7 @@
   /* Layout Dimensions - 반응형 비율 유지형 (1920px 기준 Scaling) */
   --nav-width: clamp(60px, 4vw, 80px);
   --context-width: clamp(200px, 14vw, 300px);
-  --board-width: clamp(320px, 22vw, 480px); /* 사이드보드 너비 추가 */
+  --board-width: clamp(224px, 15.4vw, 336px); /* 우측 사이드 패널 너비 30% 축소 (메인 달력 영역 확보) */
   --header-height: clamp(48px, 6vh, 64px);
   --nav-item-height: clamp(40px, 5vh, 56px);
   --dropdown-width: 120px;
