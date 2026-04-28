@@ -1,0 +1,129 @@
+.time-wheel-picker {
+  padding: 16px;
+  width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: wheelFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 16px;
+  border: 1px solid var(--border-light);
+  background: var(--bg-panel);
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-xl);
+}
+
+@keyframes wheelFadeIn {
+  from { opacity: 0; transform: translateY(-10px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.wheel-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 180px;
+  position: relative;
+  /* 상하단 페이드 효과를 위한 마스크 */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 20%,
+    black 80%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 20%,
+    black 80%,
+    transparent 100%
+  );
+}
+
+.wheel-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.wheel-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--text-dim);
+  text-align: center;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.wheel-scroll {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 60px 0; /* 중앙 정렬을 위한 상하단 패딩 */
+}
+
+.wheel-scroll::-webkit-scrollbar { display: none; }
+
+.wheel-item {
+  height: 32px;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 8px;
+}
+
+.wheel-item:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.wheel-item.active {
+  color: var(--primary);
+  font-size: 1.2rem;
+  font-weight: 800;
+  background: var(--primary-glow);
+}
+
+.wheel-divider {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--primary);
+  padding-top: 18px;
+}
+
+.wheel-footer {
+  display: flex;
+  justify-content: center;
+}
+
+.wheel-confirm-btn {
+  width: 100%;
+  padding: 8px;
+  background: var(--primary);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.wheel-confirm-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--primary-glow);
+}

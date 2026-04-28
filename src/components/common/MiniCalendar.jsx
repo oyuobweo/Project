@@ -35,7 +35,7 @@ const MiniCalendar = () => {
 
   // 단순 배열 수동 생성 (안정적 6주 렌더링)
   const days = [];
-  let dayCounter = startDate;
+  let dayCounter = new Date(startDate);
   for (let i = 0; i < 42; i++) {
     days.push(new Date(dayCounter));
     dayCounter.setDate(dayCounter.getDate() + 1);
@@ -44,7 +44,7 @@ const MiniCalendar = () => {
   const weekDays = ["일", "월", "화", "수", "목", "금", "토"];
 
   return (
-    <div className="mini-calendar-container">
+    <div className="mini-cal-context-box">
       <div className="mini-header">
         <span className="mini-title">{format(currentMonthView, 'yyyy년 M월')}</span>
         <div className="mini-nav">
@@ -75,7 +75,6 @@ const MiniCalendar = () => {
                 ${isToday ? 'today' : ''}
                 ${isHoliday ? 'holiday-red' : ''}
               `}
-              // 클릭 기능 완전 제거
             >
               {format(date, 'd')}
             </div>

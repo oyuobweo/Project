@@ -528,9 +528,10 @@
   flex-direction: column;
 }
 
-/* 캘린더 활성화 시 스크롤 억제 */
+/* 캘린더 활성화 시 스크롤 억제 및 팝업 노출 허용 */
 .main-view-column:has(.calendar-view) .main-scroll-area {
-  overflow-y: hidden;
+  overflow-y: visible;
+  overflow-x: visible;
 }
 
 /* 피처 플레이스홀더 (미구현 탭) */

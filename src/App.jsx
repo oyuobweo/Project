@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Calendar, Plus, ChevronRight, Bell, Search, BookOpen } from 'lucide-react';
+import { LayoutDashboard, Calendar, Plus, ChevronRight, Bell, Search } from 'lucide-react';
 import { TABS, SUB_TABS, THEMES } from './constants/navigation';
 import { createLogger } from './utils/logger';
 import { useEvents } from './hooks/useEvents';
@@ -13,9 +13,10 @@ import DashboardView from './components/features/DashboardView';
 import SideBoard from './components/features/SideBoard';
 import ScheduleView from './components/features/ScheduleView';
 import TodoListView from './components/features/TodoListView';
-import EventDetailModal from './components/features/EventDetailModal';
 import MiniCalendar from './components/common/MiniCalendar';
+import VisualBuilderCanvas from './components/features/VisualBuilderCanvas';
 
+import DevModeToggle from './components/common/DevModeToggle';
 import './App.css';
 
 const logger = createLogger('App');
@@ -158,7 +159,6 @@ function App() {
   const menuItems = useMemo(() => [
     { id: TABS.DASHBOARD, label: '대시보드', icon: <LayoutDashboard size={22} /> },
     { id: TABS.CALENDAR, label: '캘린더', icon: <Calendar size={22} /> },
-    { id: TABS.JOURNAL, label: '업무 일지', icon: <BookOpen size={22} /> },
   ], []);
 
   return (
@@ -192,14 +192,16 @@ function App() {
             {activeTab === TABS.DASHBOARD && <DashboardView events={events} />}
             
             {activeTab === TABS.CALENDAR && selectedSubTab === SUB_TABS.CALENDAR.DEFAULT && (
-              <div className="calendar-with-board">
+              <VisualBuilderCanvas>
                 <CalendarView
+                  key="calendar"
                   events={events}
                   selectedDate={selectedDate}
                   onDaySelect={handleDaySelect}
                 />
                 {isSideBoardOpen && (
                   <SideBoard
+                    key="sideboard"
                     selectedDate={selectedDate}
                     events={events}
                     onAddEvent={addEvent}
@@ -213,7 +215,7 @@ function App() {
                     onClose={() => setIsSideBoardOpen(false)}
                   />
                 )}
-              </div>
+              </VisualBuilderCanvas>
             )}
 
             {activeTab === TABS.CALENDAR && selectedSubTab === SUB_TABS.CALENDAR.SCHEDULE && (
@@ -245,6 +247,7 @@ function App() {
          />
        )} 
       */}
+      <DevModeToggle />
     </div>
   );
 }

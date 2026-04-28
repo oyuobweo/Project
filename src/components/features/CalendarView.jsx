@@ -28,14 +28,21 @@ function CalendarView({ events, selectedDate, onDaySelect }) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // --- 달력 계산 로직 (42일 고정) ---
-  const startDate = useMemo(() => {
-    return startOfWeek(startOfMonth(currentMonth));
-  }, [currentMonth]);
+  // --- 달력 계산 로직 (성능 최적화 버전) ---
+  const startDate = useMemo(() => startOfWeek(startOfMonth(currentMonth)), [currentMonth]);
   
-  const days = useMemo(() => {
-    return Array.from({ length: 42 }, (_, i) => addDays(startDate, i));
-  }, [startDate]);
+  const days = useMemo(() => Array.from({ length: 42 }, (_, i) => addDays(startDate, i)), [startDate]);
+
+  // 이벤트를 날짜별로 그룹화 (O(N))
+  const eventsByDate = useMemo(() => {
+    const map = {};
+    events.forEach(ev => {
+      const dateKey = format(new Date(ev.startDate || ev.date), 'yyyy-MM-dd');
+      if (!map[dateKey]) map[dateKey] = [];
+      map[dateKey].push(ev);
+    });
+    return map;
+  }, [events]);
 
   const nextMonth = () => setCurrentMonth(startOfMonth(addMonths(currentMonth, 1)));
   const prevMonth = () => setCurrentMonth(startOfMonth(subMonths(currentMonth, 1)));
@@ -43,19 +50,15 @@ function CalendarView({ events, selectedDate, onDaySelect }) {
   const years = Array.from({ length: 21 }, (_, i) => currentMonth.getFullYear() - 10 + i);
   const months = Array.from({ length: 12 }, (_, i) => i);
 
-
   return (
     <div className="calendar-view-engine">
-      {/* 캘린더 헤더: App.css 구조에 맞게 완벽 복구 */}
+      {/* 캘린더 헤더 */}
       <div className="calendar-header">
         <div className="calendar-title-group">
           <div className="picker-container">
             <button 
               className="calendar-title-btn"
-              onClick={() => {
-                setShowYearPicker(!showYearPicker);
-                setShowMonthPicker(false);
-              }}
+              onClick={() => { setShowYearPicker(!showYearPicker); setShowMonthPicker(false); }}
             >
               {format(currentMonth, 'yyyy')}년
             </button>
@@ -65,9 +68,7 @@ function CalendarView({ events, selectedDate, onDaySelect }) {
                   <button key={y} className={`picker-item ${y === currentMonth.getFullYear() ? 'active' : ''}`} onClick={() => {
                     setCurrentMonth(startOfMonth(new Date(y, currentMonth.getMonth())));
                     setShowYearPicker(false);
-                  }}>
-                    {y}
-                  </button>
+                  }}>{y}</button>
                 ))}
               </div>
             )}
@@ -75,10 +76,7 @@ function CalendarView({ events, selectedDate, onDaySelect }) {
           <div className="picker-container">
             <button 
               className="calendar-title-btn"
-              onClick={() => {
-                setShowMonthPicker(!showMonthPicker);
-                setShowYearPicker(false);
-              }}
+              onClick={() => { setShowMonthPicker(!showMonthPicker); setShowYearPicker(false); }}
             >
               {format(currentMonth, 'M')}월
             </button>
@@ -88,9 +86,7 @@ function CalendarView({ events, selectedDate, onDaySelect }) {
                   <button key={m} className={`picker-item ${m === currentMonth.getMonth() ? 'active' : ''}`} onClick={() => {
                     setCurrentMonth(startOfMonth(new Date(currentMonth.getFullYear(), m)));
                     setShowMonthPicker(false);
-                  }}>
-                    {m + 1}월
-                  </button>
+                  }}>{m + 1}월</button>
                 ))}
               </div>
             )}
@@ -98,18 +94,18 @@ function CalendarView({ events, selectedDate, onDaySelect }) {
         </div>
 
         <div className="calendar-nav">
-          <button onClick={prevMonth}><ChevronLeft size={18} /></button>
+          <button onClick={prevMonth} title="이전 달"><ChevronLeft size={20} /></button>
           <button 
             className="today-btn" 
             onClick={() => {
               const today = new Date();
               setCurrentMonth(startOfMonth(today));
-              onDaySelect(today); // 오늘 버튼 클릭 시 선택 상태도 오늘로 동기화
+              onDaySelect(today);
             }}
           >
             오늘
           </button>
-          <button onClick={nextMonth}><ChevronRight size={18} /></button>
+          <button onClick={nextMonth} title="다음 달"><ChevronRight size={20} /></button>
         </div>
       </div>
 
@@ -120,14 +116,15 @@ function CalendarView({ events, selectedDate, onDaySelect }) {
       </div>
       <div className="calendar-grid">
         {days.map(day => {
-          const dayEvents = events.filter(ev => isSameDay(new Date(ev.date), day));
+          const dateKey = format(day, 'yyyy-MM-dd');
+          const dayEvents = eventsByDate[dateKey] || [];
           const holidayName = getHoliday(day);
           const isSunday = day.getDay() === 0;
           const isSaturday = day.getDay() === 6;
 
           return (
             <div 
-              key={day.toString()} 
+              key={dateKey} 
               className={`calendar-day-cell 
                 ${!isSameMonth(day, startOfMonth(currentMonth)) ? 'other-month' : ''} 
                 ${isSameDay(day, new Date()) ? 'today' : ''}

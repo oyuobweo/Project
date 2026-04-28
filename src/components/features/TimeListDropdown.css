@@ -1,0 +1,72 @@
+.time-list-dropdown {
+  position: absolute;
+  top: calc(100% + 4px); /* 8px -> 4px 더 밀착 */
+  left: 0;
+  width: 100px; /* 칩 너비와 1:1 일치시켜 우측 여백 제거 */
+  max-height: 200px;
+  background: var(--bg-panel);
+  backdrop-filter: blur(24px);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  box-shadow: var(--shadow-xl);
+  z-index: 10000; /* 최상단으로 올려 휠 이벤트 선점 */
+  overflow: visible; /* 내부 스크롤 허용을 위해 visible로 변경 */
+  animation: dropdownSlideDown 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes dropdownSlideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.time-list-scroll {
+  max-height: 200px; /* 고정 높이 부여 */
+  overflow-y: scroll; /* 스크롤 강제 활성화 */
+  padding: 4px;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+  pointer-events: auto; /* 이벤트 수신 보장 */
+}
+
+.time-list-scroll::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.time-item {
+  padding: 8px 4px; /* 좌우 패딩 축소 */
+  font-size: 0.78rem; /* 너비 100px에 맞게 축소 */
+  font-weight: 500;
+  color: var(--text-main);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s;
+  text-align: center;
+  white-space: nowrap; /* 줄바꿈 방지 */
+}
+
+
+.time-item:hover {
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--primary);
+}
+
+.time-item.active {
+  background: var(--primary-glow);
+  color: var(--primary);
+  font-weight: 700;
+}
+
+/* 라이트 모드 대응 */
+.theme-light .time-list-dropdown {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.theme-light .time-item {
+  color: #1e293b;
+}
+
+.theme-light .time-item:hover {
+  background: #f1f5f9;
+}
